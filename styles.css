@@ -58,7 +58,8 @@ dd{margin:4px 0 0}
 .contact-links{list-style:none;padding:0;margin:0;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 footer{text-align:center;color:var(--muted);font-size:14px;padding:32px 20px 48px;border-top:1px solid var(--line)}
 
-mark.todo{background:#fff3b0;color:#5c4a00;padding:1px 6px;border-radius:6px;font-size:.9em}
+/* TODO notes are hidden for now. Delete "display:none" to see them again while filling them in. */
+mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-radius:6px;font-size:.9em}
 
 /* scroll reveal: interruptible, transform-only */
 .js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--spring),transform .7s var(--spring)}
