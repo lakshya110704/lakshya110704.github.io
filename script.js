@@ -40,6 +40,7 @@
     const sp = scene.querySelector('.pin'), r = scene.getBoundingClientRect(), p = clamp((parseFloat(getComputedStyle(sp).top) - r.top) / (scene.offsetHeight - sp.offsetHeight));
     const idx = Math.min(cards.length - 1, Math.floor(p * cards.length));
     cards.forEach((c, i) => c.classList.toggle('active', i === idx));
+    if (scene.getBoundingClientRect().top < vh * .5 && scene.getBoundingClientRect().bottom > vh * .5) say(cards[idx]);
     dots.forEach((d, i) => d.classList.toggle('active', i === idx));
     const ap_ = apex.querySelector('.pin'), ar = apex.getBoundingClientRect(), ap = clamp((parseFloat(getComputedStyle(ap_).top) - ar.top) / (apex.offsetHeight - ap_.offsetHeight));
     feats.forEach((li, i) => li.classList.toggle('on', ap >= i * .2));
@@ -67,7 +68,8 @@
   const copy = heroMe.cloneNode(true);
   copy.querySelector('img').alt = '';
   copy.innerHTML = copy.innerHTML.replace(/(id="|url\(#)(lid|glint|eyeL|eyeR)/g, '$1$2b');
-  buddy.appendChild(copy); document.body.appendChild(buddy);
+  const bubble = document.createElement('div'); bubble.className = 'thought';
+  buddy.append(copy, bubble); document.body.appendChild(buddy);
   const mes = [heroMe, copy];
   let px = innerWidth / 2, py = innerHeight * .4;
   const look = () => mes.forEach(me => {
@@ -112,8 +114,25 @@
     if (first) buddy.style.transition = 'opacity .5s'; // appear in place, don't slide in from the edge
     buddy.style.width = w + 'px'; buddy.style.setProperty('--bx', Math.max(8, cx - w / 2) + 'px');
     if (first) { buddy.getBoundingClientRect(); buddy.style.transition = ''; }
+    buddy.dataset.side = side;
     buddy.classList.add('on');
+    if (!introDone) { introDone = true; intro = 'Hi again! I will think out loud as you scroll.'; }
+    pump();
   };
+  // thought bubbles: short, candid, one at a time, always the latest one
+  let introDone = false, intro = null, pending = null, showing = false, shownAt = 0, hideT = 0;
+  const hide = () => { clearTimeout(hideT); bubble.classList.remove('show'); setTimeout(() => { showing = false; pump(); }, 450); };
+  const pump = () => {
+    if ((!pending && !intro) || showing || !buddy.classList.contains('on')) return;
+    const t = intro || pending; if (intro) intro = null; else pending = null; showing = true; shownAt = performance.now();
+    bubble.textContent = t; bubble.classList.add('show');
+    hideT = setTimeout(hide, Math.max(3200, 1800 + t.length * 55));
+  };
+  const think = t => { pending = t; if (showing && performance.now() - shownAt > 1800) hide(); else pump(); };
+  const seen = new Set();
+  const say = el => { if (!seen.has(el)) { seen.add(el); think(el.dataset.thought); } };
+  const tio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) say(e.target); }), { rootMargin: '-40% 0px -40% 0px' });
+  $('[data-thought]:not(.card)').forEach(el => tio.observe(el));
   let placeT = 0;
   addEventListener('scroll', () => { look(); const n = performance.now(); if (n - placeT > 120) { placeT = n; place(); } }, { passive: true });
   addEventListener('resize', place);

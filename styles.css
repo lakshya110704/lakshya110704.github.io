@@ -237,3 +237,14 @@ mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-r
 /* project GitHub links as buttons */
 .btn.sm{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;font-size:15px}
 .btn.sm svg{flex:none}
+
+/* thought bubbles from the small doodle */
+.thought{position:absolute;bottom:100%;margin-bottom:26px;width:max-content;max-width:250px;padding:12px 16px;border-radius:20px;background:#f5f5f7;color:#1d1d1f;font-size:15px;line-height:1.35;font-weight:500;letter-spacing:-.005em;box-shadow:0 16px 40px -14px rgba(0,0,0,.9);opacity:0;transform:scale(.7) translateY(10px);transform-origin:50% 100%;transition:opacity .35s,transform .55s var(--spring)}
+.thought.show{opacity:1;transform:none}
+.thought::before,.thought::after{content:"";position:absolute;border-radius:50%;background:#f5f5f7}
+.thought::before{width:13px;height:13px;bottom:-14px}
+.thought::after{width:8px;height:8px;bottom:-26px}
+.buddy[data-side="right"] .thought{right:10%}
+.buddy[data-side="right"] .thought::before{right:34px}.buddy[data-side="right"] .thought::after{right:26px}
+.buddy[data-side="left"] .thought{left:10%}
+.buddy[data-side="left"] .thought::before{left:34px}.buddy[data-side="left"] .thought::after{left:26px}
