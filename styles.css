@@ -14,11 +14,11 @@ a{color:var(--accent)}
 .skip:focus{left:8px}
 
 .nav{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;
-  padding:12px 20px;background:rgba(0,0,0,.72);backdrop-filter:saturate(180%) blur(20px);
+  padding:2px 20px;background:rgba(0,0,0,.72);backdrop-filter:saturate(180%) blur(20px);
   -webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(255,255,255,.1)}
 .brand{font-weight:600;color:var(--text);text-decoration:none;letter-spacing:-.01em}
 .nav nav{display:flex;gap:18px}
-.nav nav a{color:var(--muted);text-decoration:none;font-size:15px}
+.nav nav a{color:var(--muted);text-decoration:none;font-size:15px;padding:12px 4px}
 .nav nav a:hover{color:var(--text)}
 
 main>section{padding:56px 20px;max-width:1120px;margin:0 auto}
@@ -73,7 +73,7 @@ mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-r
 
 
 @media(min-width:760px){
-  .nav{padding:12px 40px}
+  .nav{padding:2px 40px}
   main>section{padding:64px 40px}
   .hero{padding-top:112px;padding-bottom:72px}
   .cards{grid-template-columns:repeat(3,1fr);column-gap:40px}
@@ -147,9 +147,9 @@ mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-r
 .window{margin-top:32px;border-radius:18px;overflow:hidden;background:#1c1c1e;box-shadow:0 30px 70px -28px rgba(0,0,0,.9),0 0 0 1px var(--line)}
 .bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line)}
 .bar i{width:11px;height:11px;border-radius:50%;background:#3a3a3c}
-.bar span{margin:0 auto;padding-right:51px;font-size:13px;color:var(--muted)}
+.bar span{margin:0 auto;padding-right:51px;font-size:13px;color:var(--text)}
 .window .video{margin:0;border-radius:0;box-shadow:none}
-.js .window{--p:0;transform-origin:50% 100%;opacity:calc(.3 + .7*var(--p));transform:perspective(1400px) rotateX(calc((1 - var(--p))*9deg)) translateY(calc((1 - var(--p))*40px)) scale(calc(.92 + .08*var(--p)))}
+.js .window{--p:0;transform-origin:50% 100%;opacity:calc(.6 + .4*var(--p));transform:perspective(1400px) rotateX(calc((1 - var(--p))*9deg)) translateY(calc((1 - var(--p))*40px)) scale(calc(.92 + .08*var(--p)))}
 
 .apexscene{border-top:1px solid var(--line);padding:48px 0}
 .apexscene .pin{display:grid;gap:40px}
@@ -186,7 +186,7 @@ mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-r
 @keyframes glint{0%,60%,100%{opacity:0;transform:translateX(0)}70%{opacity:1}90%{opacity:1;transform:translateX(1900px)}95%{opacity:0;transform:translateX(1900px)}}
 .js .me img,.js .fx{animation:breathe 5s ease-in-out infinite;transform-origin:50% 100%}
 @keyframes breathe{50%{transform:scale(1.012) translateY(-4px)}}
-.js .stage{opacity:0;transform:translateY(48px);transition:opacity 1s var(--spring),transform 1s var(--spring)}
+.js .stage{opacity:.02;transform:translateY(48px);transition:opacity 1s var(--spring),transform 1s var(--spring)}
 .js.ready .stage{opacity:1;transform:none;transition-delay:.7s}
 
 .chips span{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--alt);border:1px solid var(--line);color:var(--muted);font-size:14px;white-space:nowrap;box-shadow:0 10px 30px -12px rgba(0,0,0,.8)}
