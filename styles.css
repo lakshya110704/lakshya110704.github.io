@@ -194,7 +194,7 @@ mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-r
 @keyframes blink{0%,91%,100%{transform:scaleY(0)}94%,96%{transform:scaleY(1)}}
 @keyframes blinkline{0%,91%,100%{opacity:0}94%,96%{opacity:1}}
 @keyframes glint{0%,60%,100%{opacity:0;transform:translateX(0)}70%{opacity:1}90%{opacity:1;transform:translateX(1900px)}95%{opacity:0;transform:translateX(1900px)}}
-.js .me img{animation:breathe 5s ease-in-out infinite;transform-origin:50% 100%}
+.js .me img,.js .fx{animation:breathe 5s ease-in-out infinite;transform-origin:50% 100%}
 @keyframes breathe{50%{transform:scale(1.012) translateY(-4px)}}
 .js .stage{opacity:0;transform:translateY(48px);transition:opacity 1s var(--spring),transform 1s var(--spring)}
 .js.ready .stage{opacity:1;transform:none;transition-delay:.7s}
@@ -229,9 +229,9 @@ mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-r
 }
 
 /* small copy of the doodle that moves to whichever side has free space */
-.buddy{position:fixed;left:0;bottom:0;z-index:5;pointer-events:none;width:190px;opacity:0;transform:translate(var(--bx,0px),48px);transition:transform .9s var(--spring),opacity .5s,width .4s}
+.buddy{position:fixed;left:0;bottom:28px;z-index:5;pointer-events:none;width:140px;aspect-ratio:1;border-radius:50%;overflow:hidden;background:#1c1c1e;box-shadow:0 0 0 1px #3a3a3c,0 18px 40px -12px rgba(0,0,0,.9);opacity:0;transform:translate(var(--bx,0px),48px);transition:transform .9s var(--spring),opacity .5s,width .4s}
 .buddy.on{opacity:1;transform:translate(var(--bx,0px),0)}
-.buddy .me{-webkit-mask-image:none;mask-image:none}
+.buddy .me{-webkit-mask-image:none;mask-image:none;width:200%;margin:-14% 0 0 -52%}
 @media(max-width:999px){.buddy{display:none}}
 
 /* project GitHub links as buttons */

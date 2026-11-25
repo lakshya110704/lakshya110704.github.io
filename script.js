@@ -76,7 +76,7 @@
     me.querySelectorAll('.iris').forEach(g => {
       const cx = b.left + g.dataset.cx * b.width / 1254, cy = b.top + g.dataset.cy * b.height / 1228;
       const dx = px - cx, dy = py - cy, d = Math.hypot(dx, dy) || 1, k = Math.min(1, d / 200);
-      g.style.transform = `translate(${(dx / d * k * 10).toFixed(1)}px,${(dy / d * k * 6).toFixed(1)}px)`;
+      g.style.transform = `translate(${(dx / d * k * 8).toFixed(1)}px,${(dy / d * k * 4.5).toFixed(1)}px)`;
     });
     const nx = clamp((px - (b.left + b.width / 2)) / innerWidth * 2, -1, 1), ny = clamp((py - (b.top + b.height / 2)) / innerHeight * 2, -1, 1);
     me.style.setProperty('--nx', nx.toFixed(3)); me.style.setProperty('--ny', ny.toFixed(3));
@@ -101,12 +101,12 @@
       });
       $(MEDIA, sec).forEach(el => { const b = el.getBoundingClientRect(); if (b.bottom > 0 && b.top < vh) add(b.left, b.right); });
     }
-    const freeL = L === Infinity ? 0 : L, freeR = R === -Infinity ? 0 : innerWidth - R, need = 190;
+    const freeL = L === Infinity ? 0 : L, freeR = R === -Infinity ? 0 : innerWidth - R, need = 170;
     const okL = freeL >= need, okR = freeR >= need;
     if (!heroGone || (!okL && !okR)) { buddy.classList.remove('on'); return; }
     if (okL && okR) { if (side === 'right' && freeL > freeR + 60) side = 'left'; else if (side === 'left' && freeR > freeL + 60) side = 'right'; }
     else side = okL ? 'left' : 'right';
-    const free = side === 'left' ? freeL : freeR, w = clamp(free * .45, 170, 260);
+    const free = side === 'left' ? freeL : freeR, w = clamp(free * .3, 110, 150);
     const cx = side === 'left' ? L / 2 : (R + innerWidth) / 2;
     const first = !buddy.classList.contains('on');
     if (first) buddy.style.transition = 'opacity .5s'; // appear in place, don't slide in from the edge
