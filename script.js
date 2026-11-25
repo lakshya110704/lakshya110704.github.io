@@ -39,7 +39,7 @@
     const sp = scene.querySelector('.pin'), r = scene.getBoundingClientRect(), p = clamp((parseFloat(getComputedStyle(sp).top) - r.top) / (scene.offsetHeight - sp.offsetHeight));
     const idx = Math.min(cards.length - 1, Math.floor(p * cards.length));
     cards.forEach((c, i) => c.classList.toggle('active', i === idx));
-    if (scene.getBoundingClientRect().top < vh * .5 && scene.getBoundingClientRect().bottom > vh * .5) say(cards[idx]);
+    if (r.top < vh * .5 && r.bottom > vh * .5) setCand(cards[idx]); else if (cand && cand.classList.contains('card')) cand = null;
     dots.forEach((d, i) => d.classList.toggle('active', i === idx));
     vids.forEach(v => {
       const b = v.getBoundingClientRect();
@@ -128,10 +128,20 @@
   const think = t => { pending = t; if (showing && performance.now() - shownAt > 1800) hide(); else pump(); };
   const seen = new Set();
   const say = el => { if (!seen.has(el)) { seen.add(el); think(el.dataset.thought); } };
-  const tio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) say(e.target); }), { rootMargin: '-40% 0px -40% 0px' });
+  // a thought only fires once you settle on something: slow down or pause, never while flying past
+  let cand = null, candSince = 0, lastY = scrollY, lastT = performance.now(), speed = 0, settleT = 0;
+  const setCand = el => { if (cand !== el) { cand = el; candSince = performance.now(); } };
+  const tio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) setCand(e.target); else if (cand === e.target) cand = null; }), { rootMargin: '-40% 0px -40% 0px' });
   $('[data-thought]:not(.card)').forEach(el => tio.observe(el));
   let placeT = 0;
-  addEventListener('scroll', () => { look(); const n = performance.now(); if (n - placeT > 120) { placeT = n; place(); } }, { passive: true });
+  addEventListener('scroll', () => {
+    look(); const n = performance.now();
+    if (n - placeT > 120) { placeT = n; place(); }
+    const dt = n - lastT; if (dt > 0) { speed = Math.abs(scrollY - lastY) / dt; lastY = scrollY; lastT = n; }
+    if (speed > 2) { pending = null; if (showing) { clearTimeout(hideT); bubble.classList.remove('show'); showing = false; } } // flying past: clear it
+    else if (cand && !seen.has(cand) && n - candSince > 700 && speed < 1) say(cand);
+    clearTimeout(settleT); settleT = setTimeout(() => { speed = 0; if (cand && !seen.has(cand)) say(cand); }, 380);
+  }, { passive: true });
   addEventListener('resize', place);
   look();
 
