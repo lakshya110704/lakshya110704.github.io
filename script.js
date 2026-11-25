@@ -25,7 +25,8 @@
   // scroll-linked values, one rAF per frame
   const heroIn = document.querySelector('.hero-inner'), hero = document.querySelector('.hero');
   const scene = document.querySelector('.scene'), cards = $('.scene .card'), dots = $('.scene .dots i');
-  const vids = $('.video'), nav = document.querySelector('.nav');
+  const apex = document.querySelector('.apexscene'), feats = $('.feat li');
+  const vids = $('.window,.phone'), nav = document.querySelector('.nav');
   let queued = false;
   const tick = () => {
     queued = false;
@@ -33,18 +34,37 @@
     root.style.setProperty('--sp', clamp(y / (root.scrollHeight - vh)));
     nav.classList.toggle('solid', y > 24);
     const hp = clamp(y / (hero.offsetHeight * .7));
+    root.style.setProperty('--hp', hp);
     heroIn.style.transform = `translateY(${hp * 60}px) scale(${1 - hp * .06})`;
     heroIn.style.opacity = 1 - hp * 1.1;
     const r = scene.getBoundingClientRect(), p = clamp(-r.top / (scene.offsetHeight - vh));
     const idx = Math.min(cards.length - 1, Math.floor(p * cards.length));
     cards.forEach((c, i) => c.classList.toggle('active', i === idx));
     dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    const ar = apex.getBoundingClientRect(), ap = clamp(-ar.top / (apex.offsetHeight - vh));
+    feats.forEach((li, i) => li.classList.toggle('on', ap >= i * .2));
     vids.forEach(v => {
       const b = v.getBoundingClientRect();
       v.style.setProperty('--p', clamp((vh - b.top) / (vh * .65)));
     });
   };
   const queue = () => { if (!queued) { queued = true; requestAnimationFrame(tick); } };
+  // demo videos play muted when they are in view and pause when they leave
+  const cmd = (f, func) => f.contentWindow && f.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args: [] }), '*');
+  const vio = new IntersectionObserver(es => es.forEach(e => {
+    const f = e.target.querySelector('iframe'), on = e.isIntersecting;
+    const go = () => { if (!f._m) cmd(f, 'mute'); cmd(f, on ? 'playVideo' : 'pauseVideo'); };
+    go(); setTimeout(go, 1200); setTimeout(go, 3000);
+    if (on) setTimeout(() => { f._m = true; }, 3500);
+  }), { threshold: .6 });
+  $('.video,.phone-screen').forEach(v => vio.observe(v));
+
+  // pointer glow on buttons
+  $('.btn').forEach(b => b.addEventListener('pointermove', e => {
+    const r = b.getBoundingClientRect();
+    b.style.setProperty('--mx', e.clientX - r.left + 'px'); b.style.setProperty('--my', e.clientY - r.top + 'px');
+  }));
+
   addEventListener('scroll', queue, { passive: true });
   addEventListener('resize', queue);
   tick();
