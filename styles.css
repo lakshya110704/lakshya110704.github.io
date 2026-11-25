@@ -97,7 +97,7 @@ mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-r
 .nav{transition:background-color .3s,border-color .3s}
 .nav nav a.on{color:var(--text)}
 
-.js .hero-inner{will-change:transform,opacity}
+.js .hero-text{will-change:transform,opacity}
 .js h1 .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
 .js h1 .w>span{display:inline-block;transform:translateY(110%);transition:transform .9s var(--spring);transition-delay:calc(var(--i)*70ms)}
 .js.ready h1 .w>span{transform:none}
@@ -176,13 +176,39 @@ mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-r
   .js .feat li.on{opacity:1;transform:none}
 }
 
-.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:48px}
-.chips span{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--alt);border:1px solid var(--line);color:var(--muted);font-size:14px}
+.hero{padding-bottom:48px}
+.stage{position:relative;width:min(460px,84vw);margin:56px auto 0}
+.me{position:relative;-webkit-mask-image:linear-gradient(#000 84%,transparent);mask-image:linear-gradient(#000 84%,transparent);transform:translate(calc(var(--nx,0)*8px),calc(var(--ny,0)*4px)) rotate(calc(var(--nx,0)*1.6deg));transform-origin:50% 100%;transition:transform .6s var(--spring)}
+.me img{display:block;width:100%;height:auto}
+.fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.fx .steam{fill:none;stroke:#d2d2d7;stroke-width:7;stroke-linecap:round;opacity:0}
+.fx .lid{fill:#fbc99d;transform-box:fill-box;transform-origin:50% 0;transform:scaleY(0)}
+.fx .lash{fill:none;stroke:#1d1209;stroke-width:7;stroke-linecap:round;opacity:0}
+.fx .glint{opacity:0}
+.js .fx .steam{animation:steam 4.2s ease-in infinite}
+.js .fx .s2{animation-delay:1.4s}.js .fx .s3{animation-delay:2.8s}
+.js .fx .lid{animation:blink 5.6s infinite}
+.js .fx .lash{animation:blinkline 5.6s infinite}
+.js .fx .glint{animation:glint 7s ease-in-out 2s infinite}
+@keyframes steam{0%{opacity:0;transform:translateY(0)}25%{opacity:.75}100%{opacity:0;transform:translateY(-60px)}}
+@keyframes blink{0%,91%,100%{transform:scaleY(0)}94%,96%{transform:scaleY(1)}}
+@keyframes blinkline{0%,91%,100%{opacity:0}94%,96%{opacity:1}}
+@keyframes glint{0%,60%,100%{opacity:0;transform:translateX(0)}70%{opacity:1}90%{opacity:1;transform:translateX(1900px)}95%{opacity:0;transform:translateX(1900px)}}
+.js .me img{animation:breathe 5s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes breathe{50%{transform:scale(1.012) translateY(-4px)}}
+.js .stage{opacity:0;transform:translateY(48px);transition:opacity 1s var(--spring),transform 1s var(--spring)}
+.js.ready .stage{opacity:1;transform:none;transition-delay:.7s}
+
+.chips span{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--alt);border:1px solid var(--line);color:var(--muted);font-size:14px;white-space:nowrap;box-shadow:0 10px 30px -12px rgba(0,0,0,.8)}
 .chips span::before{content:"";width:7px;height:7px;border-radius:50%;background:#30d158}
-.js .chips span{opacity:0;transform:translateY(16px);transition:opacity .8s var(--spring),transform .8s var(--spring)}
-.js.ready .chips span{opacity:1;transform:translateY(calc(var(--hp,0)*var(--k)*-1px));transition-delay:0s}
-.chips span:nth-child(1){--k:70}.chips span:nth-child(2){--k:150}.chips span:nth-child(3){--k:100}
-.js.ready .chips span:nth-child(1){transition-delay:.9s}.js.ready .chips span:nth-child(2){transition-delay:1.05s}.js.ready .chips span:nth-child(3){transition-delay:1.2s}
+.chips span:nth-child(1){left:-9%;top:16%;--k:50}.chips span:nth-child(2){right:-11%;top:6%;--k:110}.chips span:nth-child(3){right:-7%;top:46%;--k:80}
+.js .chips span{transform:translateY(calc(var(--hp,0)*var(--k)*-1px));animation:bob 6s ease-in-out infinite}
+.js .chips span:nth-child(2){animation-duration:7.5s;animation-delay:-2s}.js .chips span:nth-child(3){animation-duration:5.2s;animation-delay:-1s}
+@keyframes bob{50%{translate:0 -7px}}
+@media(max-width:600px){.chips span{font-size:12px;padding:6px 11px}.chips span:nth-child(1){left:-3%}.chips span:nth-child(2){right:-3%}.chips span:nth-child(3){display:none}}
+
+.brand{display:inline-flex;align-items:center;gap:10px}
+.face{width:28px;height:28px;border-radius:8px;display:block}
 
 /* pointer glow on buttons */
 .btn{position:relative;overflow:hidden;isolation:isolate}

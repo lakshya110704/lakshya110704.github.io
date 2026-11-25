@@ -23,7 +23,7 @@
   $('main>section[id]').forEach(s => nio.observe(s));
 
   // scroll-linked values, one rAF per frame
-  const heroIn = document.querySelector('.hero-inner'), hero = document.querySelector('.hero');
+  const heroIn = document.querySelector('.hero-text'), hero = document.querySelector('.hero');
   const scene = document.querySelector('.scene'), cards = $('.scene .card'), dots = $('.scene .dots i');
   const apex = document.querySelector('.apexscene'), feats = $('.feat li');
   const vids = $('.window,.phone'), nav = document.querySelector('.nav');
@@ -58,6 +58,14 @@
     if (on) setTimeout(() => { f._m = true; }, 3500);
   }), { threshold: .6 });
   $('.video,.phone-screen').forEach(v => vio.observe(v));
+
+  // the doodle leans toward the cursor (mouse only)
+  const me = document.querySelector('.me');
+  if (matchMedia('(hover:hover)').matches) addEventListener('pointermove', e => {
+    const b = me.getBoundingClientRect(), cx = b.left + b.width / 2, cy = b.top + b.height / 2;
+    me.style.setProperty('--nx', clamp((e.clientX - cx) / innerWidth * 2, -1, 1).toFixed(3));
+    me.style.setProperty('--ny', clamp((e.clientY - cy) / innerHeight * 2, -1, 1).toFixed(3));
+  });
 
   // pointer glow on buttons
   $('.btn').forEach(b => b.addEventListener('pointermove', e => {
