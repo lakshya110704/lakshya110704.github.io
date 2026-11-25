@@ -37,11 +37,11 @@
     root.style.setProperty('--hp', hp);
     heroIn.style.transform = `translateY(${hp * 60}px) scale(${1 - hp * .06})`;
     heroIn.style.opacity = 1 - hp * 1.1;
-    const r = scene.getBoundingClientRect(), p = clamp(-r.top / (scene.offsetHeight - vh));
+    const sp = scene.querySelector('.pin'), r = scene.getBoundingClientRect(), p = clamp((parseFloat(getComputedStyle(sp).top) - r.top) / (scene.offsetHeight - sp.offsetHeight));
     const idx = Math.min(cards.length - 1, Math.floor(p * cards.length));
     cards.forEach((c, i) => c.classList.toggle('active', i === idx));
     dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-    const ar = apex.getBoundingClientRect(), ap = clamp(-ar.top / (apex.offsetHeight - vh));
+    const ap_ = apex.querySelector('.pin'), ar = apex.getBoundingClientRect(), ap = clamp((parseFloat(getComputedStyle(ap_).top) - ar.top) / (apex.offsetHeight - ap_.offsetHeight));
     feats.forEach((li, i) => li.classList.toggle('on', ap >= i * .2));
     vids.forEach(v => {
       const b = v.getBoundingClientRect();
