@@ -21,8 +21,8 @@ a{color:var(--accent)}
 .nav nav a{color:var(--muted);text-decoration:none;font-size:15px}
 .nav nav a:hover{color:var(--text)}
 
-main>section{padding:64px 20px;max-width:1040px;margin:0 auto}
-.hero{padding-top:104px;padding-bottom:104px;text-align:center;background:radial-gradient(60% 50% at 50% 0%,rgba(41,151,255,.16),transparent 70%)}
+main>section{padding:56px 20px;max-width:1040px;margin:0 auto}
+.hero{padding-top:88px;padding-bottom:64px;text-align:center;background:radial-gradient(60% 50% at 50% 0%,rgba(41,151,255,.16),transparent 70%)}
 .meta{color:var(--muted);font-size:15px;margin:20px 0 0}
 h1{font-size:clamp(2.4rem,8vw,5rem);line-height:1.03;letter-spacing:-.035em;margin:0 auto 24px;max-width:14em;font-weight:700;text-wrap:balance}
 h2{font-size:clamp(1.8rem,5vw,2.75rem);line-height:1.1;letter-spacing:-.025em;margin:0 0 32px;font-weight:700}
@@ -52,7 +52,7 @@ dd{margin:4px 0 0;max-width:42em}
 .video{margin-top:32px;aspect-ratio:16/10;border-radius:20px;overflow:hidden;background:#000;box-shadow:0 24px 60px -24px rgba(0,0,0,.8),0 0 0 1px var(--line)}
 .video iframe{width:100%;height:100%;border:0;display:block}
 .project.portrait .video{aspect-ratio:884/1920;max-width:320px;width:100%;margin:32px auto 0}
-.links{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 0;font-weight:500}
+.links{display:flex;gap:18px;flex-wrap:wrap;margin:20px 0 0;font-weight:500}
 
 .steps{list-style:none;padding:0;margin:0;display:grid;gap:0;counter-reset:s;border-top:1px solid var(--line)}
 .steps li{counter-increment:s;padding:24px 0;border-bottom:1px solid var(--line)}
@@ -76,7 +76,8 @@ mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-r
 
 @media(min-width:760px){
   .nav{padding:12px 40px}
-  main>section{padding:96px 40px}
+  main>section{padding:80px 40px}
+  .hero{padding-top:112px;padding-bottom:72px}
   .cards{grid-template-columns:repeat(3,1fr);column-gap:40px}
   .card{border-bottom:0;padding:32px 0 0}
   .steps{grid-template-columns:repeat(4,1fr);column-gap:32px}
@@ -86,11 +87,11 @@ mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-r
   .project .links{grid-column:1;grid-row:2;align-self:start}
   .project dl{grid-column:2;grid-row:1/3}
   .project .video{grid-column:1/-1;grid-row:3}
-  .project.portrait{grid-template-columns:1fr 320px;grid-template-rows:auto auto 1fr;column-gap:64px}
-  .project.portrait h3{grid-column:1;grid-row:1}
-  .project.portrait dl{grid-column:1;grid-row:2}
-  .project.portrait .links{grid-column:1;grid-row:3;margin-top:24px}
-  .project.portrait .video{grid-column:2;grid-row:1/4;margin:0}
+  .project.portrait{grid-template-columns:1fr 320px;grid-template-rows:1fr auto auto auto 1fr;column-gap:64px}
+  .project.portrait h3{grid-column:1;grid-row:2}
+  .project.portrait dl{grid-column:1;grid-row:3}
+  .project.portrait .links{grid-column:1;grid-row:4;margin-top:24px}
+  .project.portrait .video{grid-column:2;grid-row:1/6;margin:0}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
