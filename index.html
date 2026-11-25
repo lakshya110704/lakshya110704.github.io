@@ -22,6 +22,7 @@
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
+  <div class="progress" aria-hidden="true"></div>
   <header class="nav">
     <a class="brand" href="#top">Lakshya</a>
     <nav aria-label="Main">
@@ -33,32 +34,37 @@
 
   <main id="main">
     <section class="hero" id="top">
+      <div class="hero-inner">
       <h1>I build AI assistants and automations for small businesses</h1>
       <p class="lead">I turn your repetitive daily tasks into things that run themselves, so you spend your time on customers.</p>
       <!-- TODO: confirm this Calendly address; add /15min once that event type exists -->
       <a class="btn" href="https://calendly.com/workwithlakshya0">Book a free 15-min call</a>
       <p class="meta">Freelance developer, India · Remote</p>
+      </div>
     </section>
 
-    <section class="section" id="build" aria-labelledby="build-h">
+    <section class="section scene" id="build" aria-labelledby="build-h">
+     <div class="pin">
       <h2 id="build-h">What I build</h2>
       <div class="cards">
-        <article class="card reveal">
+        <article class="card">
           <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>
           <h3>AI chatbots and assistants</h3>
           <p>Answer customers and staff around the clock, from your own information.</p>
         </article>
-        <article class="card reveal">
+        <article class="card">
           <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12a7 7 0 0 1 12-5l2-2v6h-6l2-2a4 4 0 1 0 1 4h3A7 7 0 0 1 5 12z"/></svg>
           <h3>Workflow automation</h3>
           <p>Messages, bookings and follow-ups happen on their own, so nothing slips through.</p>
         </article>
-        <article class="card reveal">
+        <article class="card">
           <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 4h16v12H4zM8 20h8M12 16v4"/></svg>
           <h3>Web apps and dashboards</h3>
           <p>One simple place to see your orders, stock and numbers.</p>
         </article>
       </div>
+      <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+     </div>
     </section>
 
     <section class="section" id="work" aria-labelledby="work-h">
