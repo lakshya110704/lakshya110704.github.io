@@ -43,7 +43,7 @@
     if (scene.getBoundingClientRect().top < vh * .5 && scene.getBoundingClientRect().bottom > vh * .5) say(cards[idx]);
     dots.forEach((d, i) => d.classList.toggle('active', i === idx));
     const ap_ = apex.querySelector('.pin'), ar = apex.getBoundingClientRect(), ap = clamp((parseFloat(getComputedStyle(ap_).top) - ar.top) / (apex.offsetHeight - ap_.offsetHeight));
-    feats.forEach((li, i) => li.classList.toggle('on', ap >= i * .2));
+    feats.forEach((li, i) => li.classList.toggle('on', ap >= i * .22));
     vids.forEach(v => {
       const b = v.getBoundingClientRect();
       v.style.setProperty('--p', clamp((vh - b.top) / (vh * .65)));

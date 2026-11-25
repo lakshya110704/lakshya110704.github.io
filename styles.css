@@ -170,7 +170,7 @@ mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-r
 }
 @media(min-width:760px) and (min-height:700px){
   .js .apexscene{padding:0}
-  .js .apexscene::after{content:"";display:block;height:130vh}
+  .js .apexscene::after{content:"";display:block;height:75vh}
   .js .apexscene .pin{position:sticky;top:84px;padding:48px 0 0}
   .js .feat li{opacity:.22;transform:translateX(-8px)}
   .js .feat li.on{opacity:1;transform:none}
