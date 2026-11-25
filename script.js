@@ -59,13 +59,65 @@
   }), { threshold: .6 });
   $('.video,.phone-screen').forEach(v => vio.observe(v));
 
-  // the doodle leans toward the cursor (mouse only)
-  const me = document.querySelector('.me');
-  if (matchMedia('(hover:hover)').matches) addEventListener('pointermove', e => {
-    const b = me.getBoundingClientRect(), cx = b.left + b.width / 2, cy = b.top + b.height / 2;
-    me.style.setProperty('--nx', clamp((e.clientX - cx) / innerWidth * 2, -1, 1).toFixed(3));
-    me.style.setProperty('--ny', clamp((e.clientY - cy) / innerHeight * 2, -1, 1).toFixed(3));
+  // doodles: eyes follow the cursor, head leans, and a small copy sits on whichever side has free space
+  const hasHover = matchMedia('(hover:hover)').matches;
+  const heroMe = document.querySelector('.stage .me'), stage = document.querySelector('.stage');
+  const buddy = document.createElement('div');
+  buddy.className = 'buddy'; buddy.setAttribute('aria-hidden', 'true');
+  const copy = heroMe.cloneNode(true);
+  copy.querySelector('img').alt = '';
+  copy.innerHTML = copy.innerHTML.replace(/(id="|url\(#)(lid|glint|eyeL|eyeR)/g, '$1$2b');
+  buddy.appendChild(copy); document.body.appendChild(buddy);
+  const mes = [heroMe, copy];
+  let px = innerWidth / 2, py = innerHeight * .4;
+  const look = () => mes.forEach(me => {
+    const b = me.getBoundingClientRect();
+    if (b.bottom < 0 || b.top > innerHeight || b.width === 0) return;
+    me.querySelectorAll('.iris').forEach(g => {
+      const cx = b.left + g.dataset.cx * b.width / 1254, cy = b.top + g.dataset.cy * b.height / 1228;
+      const dx = px - cx, dy = py - cy, d = Math.hypot(dx, dy) || 1, k = Math.min(1, d / 200);
+      g.style.transform = `translate(${(dx / d * k * 10).toFixed(1)}px,${(dy / d * k * 6).toFixed(1)}px)`;
+    });
+    const nx = clamp((px - (b.left + b.width / 2)) / innerWidth * 2, -1, 1), ny = clamp((py - (b.top + b.height / 2)) / innerHeight * 2, -1, 1);
+    me.style.setProperty('--nx', nx.toFixed(3)); me.style.setProperty('--ny', ny.toFixed(3));
   });
+  if (hasHover) addEventListener('pointermove', e => { px = e.clientX; py = e.clientY; look(); });
+
+  // which side of the current section has the most free room?
+  const TEXT = 'h2,h3,p,dt,dd,li,.btn,.brand';
+  const MEDIA = '.window,.phone,.steps,.contact-links';
+  let side = 'right', heroGone = false;
+  new IntersectionObserver(es => es.forEach(e => { heroGone = !e.isIntersecting; place(); })).observe(stage);
+  const place = () => {
+    const vh = innerHeight, cands = $('main>section, .apexscene').filter(s => { const r = s.getBoundingClientRect(); return r.top < vh / 2 && r.bottom > vh / 2; });
+    const sec = cands[cands.length - 1];
+    let L = Infinity, R = -Infinity;
+    if (sec) {
+      const add = (l, r) => { if (r - l > 2) { L = Math.min(L, l); R = Math.max(R, r); } };
+      $(TEXT, sec).forEach(el => {
+        if (el.closest('.nav') || el.closest('.card:not(.active)') || getComputedStyle(el).opacity < .2) return;
+        const rg = document.createRange(); rg.selectNodeContents(el);
+        const b = rg.getBoundingClientRect(); if (b.bottom > 0 && b.top < vh) add(b.left, b.right);
+      });
+      $(MEDIA, sec).forEach(el => { const b = el.getBoundingClientRect(); if (b.bottom > 0 && b.top < vh) add(b.left, b.right); });
+    }
+    const freeL = L === Infinity ? 0 : L, freeR = R === -Infinity ? 0 : innerWidth - R, need = 190;
+    const okL = freeL >= need, okR = freeR >= need;
+    if (!heroGone || (!okL && !okR)) { buddy.classList.remove('on'); return; }
+    if (okL && okR) { if (side === 'right' && freeL > freeR + 60) side = 'left'; else if (side === 'left' && freeR > freeL + 60) side = 'right'; }
+    else side = okL ? 'left' : 'right';
+    const free = side === 'left' ? freeL : freeR, w = clamp(free * .45, 170, 260);
+    const cx = side === 'left' ? L / 2 : (R + innerWidth) / 2;
+    const first = !buddy.classList.contains('on');
+    if (first) buddy.style.transition = 'opacity .5s'; // appear in place, don't slide in from the edge
+    buddy.style.width = w + 'px'; buddy.style.setProperty('--bx', Math.max(8, cx - w / 2) + 'px');
+    if (first) { buddy.getBoundingClientRect(); buddy.style.transition = ''; }
+    buddy.classList.add('on');
+  };
+  let placeT = 0;
+  addEventListener('scroll', () => { look(); const n = performance.now(); if (n - placeT > 120) { placeT = n; place(); } }, { passive: true });
+  addEventListener('resize', place);
+  look();
 
   // pointer glow on buttons
   $('.btn').forEach(b => b.addEventListener('pointermove', e => {

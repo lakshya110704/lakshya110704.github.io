@@ -21,7 +21,7 @@ a{color:var(--accent)}
 .nav nav a{color:var(--muted);text-decoration:none;font-size:15px}
 .nav nav a:hover{color:var(--text)}
 
-main>section{padding:56px 20px;max-width:1040px;margin:0 auto}
+main>section{padding:56px 20px;max-width:1120px;margin:0 auto}
 .hero{padding-top:88px;padding-bottom:64px;text-align:center;background:radial-gradient(60% 50% at 50% 0%,rgba(41,151,255,.16),transparent 70%)}
 .meta{color:var(--muted);font-size:15px;margin:20px 0 0}
 h1{font-size:clamp(2.4rem,8vw,5rem);line-height:1.03;letter-spacing:-.035em;margin:0 auto 24px;max-width:14em;font-weight:700;text-wrap:balance}
@@ -109,7 +109,7 @@ mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-r
 /* pinned feature scene: one capability at a time */
 .js main>section.scene{max-width:none;padding:0}
 .js .scene::after{content:"";display:block;height:110vh}
-.js .scene .pin{position:sticky;top:max(84px,12svh);max-width:1040px;margin:0 auto;padding:0 20px;display:flex;flex-direction:column}
+.js .scene .pin{position:sticky;top:max(84px,12svh);max-width:1120px;margin:0 auto;padding:0 20px;display:flex;flex-direction:column}
 .js .scene h2{margin-bottom:40px}
 .js .scene .cards{display:block;border:0}
 .js .scene .card{padding:0;border:0;position:absolute;left:0;right:0;opacity:0;transform:translateY(40px);transition:opacity .6s var(--spring),transform .6s var(--spring);pointer-events:none}
@@ -215,3 +215,25 @@ mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-r
 .btn::after{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .3s;background:radial-gradient(110px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.28),transparent 70%)}
 .btn:hover::after{opacity:1}
 .btn.ghost::after{background:radial-gradient(110px circle at var(--mx,50%) var(--my,50%),rgba(41,151,255,.3),transparent 70%)}
+
+/* eyes follow the cursor */
+.fx .iris{transition:transform .12s linear}
+
+/* desktop hero: text left, doodle right, so you are on the first screen */
+@media(min-width:1000px){
+  .hero{text-align:left;padding-top:72px}
+  .hero-inner{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:32px}
+  .hero h1{margin:0 0 20px;max-width:none;font-size:clamp(2.6rem,4.6vw,4rem)}
+  .hero .lead{margin:0 0 28px}
+  .stage{margin:0;justify-self:center;width:min(440px,100%)}
+}
+
+/* small copy of the doodle that moves to whichever side has free space */
+.buddy{position:fixed;left:0;bottom:0;z-index:5;pointer-events:none;width:190px;opacity:0;transform:translate(var(--bx,0px),48px);transition:transform .9s var(--spring),opacity .5s,width .4s}
+.buddy.on{opacity:1;transform:translate(var(--bx,0px),0)}
+.buddy .me{-webkit-mask-image:none;mask-image:none}
+@media(max-width:999px){.buddy{display:none}}
+
+/* project GitHub links as buttons */
+.btn.sm{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;font-size:15px}
+.btn.sm svg{flex:none}
