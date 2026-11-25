@@ -101,12 +101,12 @@
       });
       $(MEDIA, sec).forEach(el => { const b = el.getBoundingClientRect(); if (b.bottom > 0 && b.top < vh) add(b.left, b.right); });
     }
-    const freeL = L === Infinity ? 0 : L, freeR = R === -Infinity ? 0 : innerWidth - R, need = 170;
+    const freeL = L === Infinity ? 0 : L, freeR = R === -Infinity ? 0 : innerWidth - R, need = 190;
     const okL = freeL >= need, okR = freeR >= need;
     if (!heroGone || (!okL && !okR)) { buddy.classList.remove('on'); return; }
     if (okL && okR) { if (side === 'right' && freeL > freeR + 60) side = 'left'; else if (side === 'left' && freeR > freeL + 60) side = 'right'; }
     else side = okL ? 'left' : 'right';
-    const free = side === 'left' ? freeL : freeR, w = clamp(free * .3, 110, 150);
+    const free = side === 'left' ? freeL : freeR, w = clamp(free * .45, 170, 240);
     const cx = side === 'left' ? L / 2 : (R + innerWidth) / 2;
     const first = !buddy.classList.contains('on');
     if (first) buddy.style.transition = 'opacity .5s'; // appear in place, don't slide in from the edge

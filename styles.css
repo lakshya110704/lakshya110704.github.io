@@ -229,9 +229,9 @@ mark.todo{display:none;background:#fff3b0;color:#5c4a00;padding:1px 6px;border-r
 }
 
 /* small copy of the doodle that moves to whichever side has free space */
-.buddy{position:fixed;left:0;bottom:28px;z-index:5;pointer-events:none;width:140px;aspect-ratio:1;border-radius:50%;overflow:hidden;background:#1c1c1e;box-shadow:0 0 0 1px #3a3a3c,0 18px 40px -12px rgba(0,0,0,.9);opacity:0;transform:translate(var(--bx,0px),48px);transition:transform .9s var(--spring),opacity .5s,width .4s}
+.buddy{position:fixed;left:0;bottom:0;z-index:5;pointer-events:none;width:200px;opacity:0;transform:translate(var(--bx,0px),48px);transition:transform .9s var(--spring),opacity .5s,width .4s}
 .buddy.on{opacity:1;transform:translate(var(--bx,0px),0)}
-.buddy .me{-webkit-mask-image:none;mask-image:none;width:200%;margin:-14% 0 0 -52%}
+.buddy .me{-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
 @media(max-width:999px){.buddy{display:none}}
 
 /* project GitHub links as buttons */
